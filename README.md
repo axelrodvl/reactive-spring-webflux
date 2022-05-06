@@ -24,3 +24,8 @@ brew services restart mongodb-community
 - Follow the steps in the below link to install Mongo db in Windows.
 
 https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
+```
+docker run --name reactive-mongo -p 27017:27017 -d mongo:latest
+docker exec -it reactive-mongo bash
+```
