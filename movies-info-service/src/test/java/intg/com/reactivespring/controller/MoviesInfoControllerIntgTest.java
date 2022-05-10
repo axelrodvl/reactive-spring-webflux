@@ -109,6 +109,19 @@ class MoviesInfoControllerIntgTest {
     }
 
     @Test
+    void getMovieInfoById_notFound() {
+        // given
+        var movieInfoId = "def";
+
+        // when
+        webTestClient
+                .get()
+                .uri(MOVIE_INFO_URL + "/{id}", movieInfoId)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
     void updateMovieInfo() {
         // given
         var movieInfoId = "abc";
@@ -147,7 +160,7 @@ class MoviesInfoControllerIntgTest {
                 .uri(MOVIE_INFO_URL + "/{id}", movieInfoId)
                 .bodyValue(movieInfo)
                 .exchange()
-                .expectStatus().is2xxSuccessful();
+                .expectStatus().isNotFound();
 
         // then
     }
