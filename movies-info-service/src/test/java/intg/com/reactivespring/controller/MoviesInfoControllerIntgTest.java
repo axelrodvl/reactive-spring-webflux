@@ -135,6 +135,24 @@ class MoviesInfoControllerIntgTest {
     }
 
     @Test
+    void updateMovieInfo_notFound() {
+        // given
+        var movieInfoId = "def";
+        var movieInfo = new MovieInfo(null, "Dark Knight Rises1",
+                2005, List.of("Christian Bale", "Michael Cane"), LocalDate.parse("2005-06-15"));
+
+        // when
+        webTestClient
+                .put()
+                .uri(MOVIE_INFO_URL + "/{id}", movieInfoId)
+                .bodyValue(movieInfo)
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+
+        // then
+    }
+
+    @Test
     void deleteMovieInfoById() {
         // given
         var movieInfoId = "abc";
