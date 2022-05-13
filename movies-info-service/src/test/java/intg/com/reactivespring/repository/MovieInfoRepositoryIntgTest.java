@@ -11,6 +11,7 @@ import reactor.test.StepVerifier;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -115,6 +116,37 @@ class MovieInfoRepositoryIntgTest {
         // then
         StepVerifier.create(moviesInfoFlux)
                 .expectNextCount(2)
+                .verifyComplete();
+    }
+
+    @Test
+    void findByYear() {
+        // given
+
+        // when
+        var moviesInfoFlux = movieInfoRepository.findByYear(2005).log();
+
+        // then
+        StepVerifier.create(moviesInfoFlux)
+                .assertNext(movieInfo -> {
+                    assertEquals("Batman Begins", movieInfo.getName());
+                })
+                .verifyComplete();
+    }
+
+    @Test
+    void findByName() {
+        // given
+        String name = "Batman Begins";
+
+        // when
+        var moviesInfoFlux = movieInfoRepository.findByName(name).log();
+
+        // then
+        StepVerifier.create(moviesInfoFlux)
+                .assertNext(movieInfo -> {
+                    assertEquals(2005, movieInfo.getYear());
+                })
                 .verifyComplete();
     }
 }
