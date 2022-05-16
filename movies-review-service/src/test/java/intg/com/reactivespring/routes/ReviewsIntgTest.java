@@ -10,11 +10,8 @@ import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWeb
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.springframework.web.util.UriBuilder;
 
-import java.net.URI;
 import java.util.List;
-import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -91,7 +88,10 @@ class ReviewsIntgTest {
         // when
         webTestClient
                 .get()
-                .uri(REVIEWS_URL + "?movieInfoId={movieInfoId}", movieInfoId)
+                .uri(uriBuilder -> uriBuilder
+                        .path(REVIEWS_URL)
+                        .queryParam("movieInfoId", movieInfoId)
+                        .build())
                 .exchange()
                 .expectBodyList(Review.class)
                 .hasSize(2);
